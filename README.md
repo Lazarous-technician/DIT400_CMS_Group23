@@ -1,2 +1,19 @@
-# DIT400_CMS_Group23
-this is the repo for the  course management system
+#  DIT400 
+# COURSE MANAGEMENT SYSTEM
+
+
+#Members
+
+| Names            | studend IDs    
+|----------------  |----------- |
+| Lazarous Mpande  | 2410450    | 
+| Carol Kunda      | 2410208    | 
+| amanyilen tuntu  |   |
+
+
+#C++ run instruction
+
+
+
+
+
