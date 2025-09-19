@@ -19,6 +19,9 @@ void options();
 void addCourse();
 void listCourses();
 void deleteCourse(const string& target_id);
+void updateCourse(const string& target_id);
+void searchCourse(const string& search_id);
+
 
 
 void courseLoad(){
@@ -341,6 +344,98 @@ void listCourses(){
 
 
     }
+
+
+}
+
+
+void updateCourse( const string& target_id){
+
+        string new_id, coursename;
+
+        int credit_Hours;
+
+        bool found =false;
+
+        for(int i =0; i< numberOfCourses; i++){
+
+            if(courseids[i] == target_id){
+
+                    cout<< "\nCourse found. Enter new details:\n";
+
+                    cout<< "Enter new course id: ";
+                    cin>>new_id;
+                    cout<< "Enter new course name: ";
+                    cin>>coursename;
+                    cout<< "Enter new creditHours: ";
+                    cin>>credit_Hours;
+
+
+                    courseids[i] = new_id;
+                    course_name[i] = coursename;
+                    creditHours[i] = credit_Hours;
+
+                    found = true;
+                    break;
+
+
+            }
+        }
+
+
+        if(found){
+
+            addtoFile();
+
+             cout << "Course " << target_id << " updated successfully!\n";
+        }else{
+
+            cout << "Course with ID " << target_id << " not found.\n";
+
+        }
+
+
+
+    }
+
+void searchCourse(const string& search_id){
+
+        bool found =true;
+
+        for(int i =0; i<numberOfCourses; i++){
+
+            if(courseids[i] == search_id){
+
+                found = true;
+
+                cout<<"\n *********** Course Found! *********** \n";
+
+                cout<< "\nID: " << " " <<courseids[i] <<"\n";
+                cout<< "Name: " << " " << course_name[i] << "\n";
+                cout<< "credit Hours: " << " " << creditHours[i] <<"\n";
+            }
+        }
+
+
+        if(!found){
+
+            cout<< "There is no course with this " << search_id<< "Course id."<<endl;
+        }
+
+    }
+
+void listCourses(){
+
+    cout<<"\n *********** All Courses! *********** \n";
+
+    for(int i =0; i<numberOfCourses; i++){
+
+        cout<< "\nID: " << " " <<courseids[i] <<"\n";
+        cout<< "Name: " << " " << course_name[i] << "\n";
+        cout<< "credit Hours: " << " " << creditHours[i] <<"\n";
+
+
+}
 
 
 }
