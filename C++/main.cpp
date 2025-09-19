@@ -4,10 +4,51 @@
 
 using namespace std;
 
+int  const totalCourse = 100;
+
+string courseids[totalCourse];
+string course_name[totalCourse];
+int creditHours[totalCourse];
+int numberOfCourses =0;
+
 void Options();
 void Registration();
 void Login();
 void options();
+
+void addCourse();
+void listCourses();
+void deleteCourse(const string& target_id);
+
+
+void courseLoad(){
+
+    ifstream infile("course.txt");
+
+
+    while(infile>>courseids[numberOfCourses]>> course_name[numberOfCourses]>> creditHours[numberOfCourses]){
+
+        numberOfCourses++;
+
+    }
+
+    infile.close();
+
+}
+
+void addtoFile(){
+
+    ofstream outData("course.txt");
+
+    for(int i; i<numberOfCourses; i++){
+
+        outData<<courseids[i]<< " " <<course_name[i] << " " <<creditHours[i]<<endl;
+    }
+
+    outData.close();
+
+}
+
 
 int main(){
 
@@ -116,8 +157,6 @@ void options(){
 
     cout << "1. Add Course\n";
     cout << "2. Delete Course\n";
-    cout << "3. Search Course\n";
-    cout << "4. Update Course\n";
     cout << "5. List All Courses\n";
     cout << "6. Logout / Exit\n"<<endl;
 
@@ -125,7 +164,39 @@ void options(){
     cin>>CourseOption;
 
 
+    switch(CourseOption){
+
+    case 1:
+        courseLoad();
+        system("cls");
+        addCourse();
+        break;
+    case 2:
+        courseLoad();
+         system("cls");
+        cout<< " Enter the course_id: ";
+        cin>>courseID;
+
+        deleteCourse(courseID);
+
+    case 5:
+        courseLoad();
+         system("cls");
+        listCourses();
+        break;
+    case 6:
+        exit;
+        break;
+
+    default:
+        cout<< "invalid input"<<endl;
+
     }
+
+
+
+}
+
 
 
 
@@ -180,3 +251,96 @@ void Login(){
 
 
 
+  void addCourse(){
+
+        string coursename, course_id;
+        int credit_Hours;
+        bool exist = false;
+
+        cout<< "Enter course id: ";
+        cin>>course_id;
+        cout<< "Enter the course Name: ";
+        cin>>coursename;
+        cout<< "Enter the credit hours: ";
+        cin>>credit_Hours;
+
+
+        for(int i =0; i <numberOfCourses; i++){
+
+            if(courseids[i] == course_id){
+
+                exist =true;
+                break;
+            }
+
+        }
+
+        if(exist){
+
+            cout<< "The entered information already exist:"<<endl;
+        }else{
+
+           courseids[numberOfCourses] = course_id;
+           course_name[numberOfCourses] = coursename;
+           creditHours[numberOfCourses]= credit_Hours;
+           numberOfCourses++;
+           addtoFile();
+
+            cout<< "The course has been added successfully. "<<endl;
+
+
+        }
+    }
+
+     void deleteCourse( const string& target_id){
+
+        bool found = false;
+
+        for(int i; i<numberOfCourses; i++){
+
+            if(courseids[i] == target_id){
+
+                    for(int x; x<numberOfCourses-1; x++){
+
+                        courseids[x] = courseids[x+1];
+                        course_name[x] = course_name[x+1];
+                        creditHours[x]  =creditHours[x+1];
+
+                    }
+
+                    numberOfCourses--;
+                    found = true;
+                    break;
+            }
+        }
+
+        if(found){
+
+            addtoFile();
+
+            cout << "Course " << target_id << " deleted successfully.\n";
+        }else{
+
+            cout << "Course " << target_id << " not found.\n";
+
+        }
+
+
+    }
+
+
+void listCourses(){
+
+    cout<<"\n *********** All Courses! *********** \n";
+
+    for(int i =0; i<numberOfCourses; i++){
+
+        cout<< "\nID: " << " " <<courseids[i] <<"\n";
+        cout<< "Name: " << " " << course_name[i] << "\n";
+        cout<< "credit Hours: " << " " << creditHours[i] <<"\n";
+
+
+    }
+
+
+}
